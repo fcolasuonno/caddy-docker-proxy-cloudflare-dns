@@ -1,4 +1,4 @@
-[Caddy Web Server](https://caddyserver.com/) with [caddy-docker-proxy](https://github.com/lucaslorentz/caddy-docker-proxy) and [cloudflare](https://github.com/caddy-dns/cloudflare)
+[Caddy Web Server](https://caddyserver.com/) with [caddy-docker-proxy](https://github.com/lucaslorentz/caddy-docker-proxy), [cloudflare](https://github.com/caddy-dns/cloudflare), and [caddy-l4](https://github.com/mholt/caddy-l4)
 
 [![Docker Build and Publish](https://github.com/fcolasuonno/caddy-docker-proxy-cloudflare-dns/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/fcolasuonno/caddy-docker-proxy-cloudflare-dns/actions/workflows/docker-publish.yml)
 
@@ -25,7 +25,6 @@ services:
     container_name: caddy
     image: fcolasuonno/caddy-docker-proxy-cloudflare-dns
     ports:
-      - 80:80
       - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -40,4 +39,8 @@ services:
     labels:
       caddy: whoami.example.com
       caddy.reverse_proxy: "{{upstreams 80}}"
+
+  ssh-server:
+    labels:
+      'caddy.layer4.:22.route.proxy': "{{ upstreams 22 }}"
 ```
