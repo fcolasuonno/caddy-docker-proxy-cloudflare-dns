@@ -42,13 +42,13 @@ jobs:
              [ "$CADDY_DNS_CLOUDFLARE_VERSION" != "$LATEST_CADDY_DNS_CLOUDFLARE_VERSION" ] || \
              [ "$CADDY_LATEST_DIGEST" != "$LATEST_CADDY_DIGEST" ]; then
             echo "New versions found"
-            echo "::set-output name=new_versions::true"
-            echo "::set-output name=latest_caddy_docker_proxy_version::$LATEST_CADDY_DOCKER_PROXY_VERSION"
-            echo "::set-output name=latest_caddy_dns_cloudflare_version::$LATEST_CADDY_DNS_CLOUDFLARE_VERSION"
-            echo "::set-output name=latest_caddy_digest::$LATEST_CADDY_DIGEST"
+            echo "new_versions=true" >> $GITHUB_OUTPUT
+            echo "latest_caddy_docker_proxy_version=$LATEST_CADDY_DOCKER_PROXY_VERSION" >> $GITHUB_OUTPUT
+            echo "latest_caddy_dns_cloudflare_version=$LATEST_CADDY_DNS_CLOUDFLARE_VERSION" >> $GITHUB_OUTPUT
+            echo "latest_caddy_digest=$LATEST_CADDY_DIGEST" >> $GITHUB_OUTPUT
           else
             echo "No new versions found"
-            echo "::set-output name=new_versions::false"
+            echo "new_versions=false" >> $GITHUB_OUTPUT
           fi
 
   build-and-push-docker-image:
